@@ -10,9 +10,7 @@ definition: https://en.wikipedia.org/wiki/Micro_movie
 
 ## What does this search engine does?
 
-```
 ![](https://github.com/Rafael-Cheng/AnEasySearchEngineForMicroMovies/blob/master/main.png)
-```
 
 Button Vikno enables users to search desired micro movies.
 
