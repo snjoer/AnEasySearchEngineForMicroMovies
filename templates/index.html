@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}ViKino{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    #mainbody{ margin-top:10px;}
+    #logo{ margin-left:25%; }
+    #btn-1{clear:both; margin: 20px 0 0 11.5%; width:100px; height:40px; background-color:#ECECEC; color:#7C7C7C; border-radius:5px;}
+    #btn-2{float:left; margin: 20px 0 0 25%; width:100px; height:40px; background-color:#ECECEC; color:#7C7C7C; border-radius:5px;}
+    #btn-1:hover, #btn-2:hover{ border-color:#8A8A8A; color:#000000;}
+    #btn-1:focus, #btn-2:focus{outline: none; border-color: #3B94D3;}
+    .search-input{margin-left: 15%; width: 70%; height: 44px; border-color: #C6C6C6; border-width: 1px; 
+        border-top-style: solid;border-style: solid; border-radius: 4px; 
+        font-size: 16px; padding-left: 0px; box-shadow: 0px 1px #C6C6C6;}
+    .search-input:hover {border-color: #969696; box-shadow: -1px 1px #969696;}
+    input:focus {border-color: #969696; box-shadow: -1px 1px #969696; outline: none;}
+    .page-header{ border:none; }
+    .wrap{ width:1125px; overflow-x:auto; }
+
+</style>
+<div class="wrap">
+<div class="page-header">
+    <img src='/static/main_logo.png' id="logo" width="50%" ></img>
+</div>
+<form method="post"> 
+    {{ form.hidden_tag() }}                                                                                                       {{ form.query.lable }} {{ form.query( class="search-input" ) }} 
+    {{ form.submit( id="btn-2") }}
+</form>
+<a href={{url_for('rand')}}><button id="btn-1">λ</button></a>
+<a href={{url_for('visidata')}}><button id="btn-1">Data</button></a>
+</div>
+
+{% endblock %}

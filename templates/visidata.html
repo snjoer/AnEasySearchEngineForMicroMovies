@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js\"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='stylesheets/style.css') }}" />
+{% block title %}ViKino{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    .btn{ margin: -65px 0 0 12%; width:10%; height:40px; background-color:#ECECEC;color:#7C7C7C;}
+    .btn:hover{ border-color:#8A8A8A; color:#000000;}
+    .btn:focus{outline: none; border-color: #3B94D3;}
+    .line{ margin-left:-40px; height:auto; }
+    .image{ width:11%; margin-bottom:-30px; overflow:hidden; }
+    #pageh{ padding-bottom:0px; margin:0px; margin-top:-15px; }
+    .warp{ width:1125px; overflow-x:auto; }
+    .left{ width:30%; float:left; margin-top:20px; }
+    .middle{ width:30%; float:left; margin-left:5%; margin-top:20px; }
+    .right{ width:30%; float:left; margin-left:5%; margin-top:20px; }
+    li{ list-style-type:decimal; }
+    h2{ clear:both; }
+    .figure{ clear:both; }
+    .figure img{ width:100%; }
+    .figure-1{ width:50%; float:left; border-top: 1px solid #eee; }
+    .figure-3{ width:50%; clear:both; float:left; }
+    .figure-4{ width:50%; float:right; border-top: 1px solid #eee; }
+    .figure-2{ width:50%; float:right; }
+
+</style>
+
+<div class="warp">
+    <div class="page-header" id="pageh">
+        <a href={{ url_for('index')}}><img src="/static/logo.png" width="12%" class="image"></img></a>
+        <form method="post"> 
+            {{ visidata.submit( class="btn btn-defalut") }}
+        </form>
+    </div>
+    <h2>微电影排行榜</h2>
+    <div class="left">
+        <h4>&nbsp&nbsp&nbsp&nbsp微电影评分Top 30</h4>
+        <ul>
+            {% for post in posts[0] %}
+            <li>
+                <a href={{post[1]}}>{{ post[0] }}</br>评分：{{ post[2] }}</a>
+            </li>
+            <br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="middle">
+        <h4>&nbsp&nbsp&nbsp&nbsp微电影喜欢数Top 30</h4>
+        <ul>
+            {% for post in posts[1] %}
+            <li>
+                <a href={{post[1]}}>{{ post[0] }}</br>喜欢数：{{ post[2] }}</a>
+            </li>
+            <br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="right">
+        <h4>&nbsp&nbsp&nbsp&nbsp微电影播放数Top 30</h4>
+        <ul>
+            {% for post in posts[2] %}
+            <li>
+                <a href={{post[1]}}>{{ post[0] }}</br>播放数：{{ post[2] }}</a>
+            </li>
+            <br>
+            {% endfor %}
+        </ul>
+    </div>
+    <h2>微电影数据</h2>
+    <div class="figure">
+        <div class="figure-1"><img src="/static/pic/visidata/figure_1.png" ></img></div>
+        <div class="figure-4"><img src="/static/pic/visidata/figure_4.png" ></img></div>
+        <div class="figure-3"><img src="/static/pic/visidata/figure_3.png" ></img></div>
+        <div class="figure-2"><img src="/static/pic/visidata/figure_2.png" ></img></div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js\"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='stylesheets/style.css') }}" />
+{% block title %}ViKino{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    .body{ width:1125px; overflow-x:auto; margin:0 atuo; }
+    .btn{ margin: -130px 0 0 11%; width:100px; height:40px; background-color:#ECECEC;color:#7C7C7C;}
+    .btn:hover{ border-color:#8A8A8A; color:#000000;}
+    .btn:focus{outline: none; border-color: #3B94D3;}
+    .search-input{margin:; width: 600px; height: 40px; border-color: #C6C6C6; border-width: 1px;
+	    border-style: solid; border-radius: 4px; font-size: 16px; padding-left: 0px; box-shadow: 0px 1px #C6C6C6;}
+    .search-input:hover {border-color: #969696; box-shadow: -1px 1px #969696;}
+    input:focus {border-color: #969696; box-shadow: -1px 1px #969696; outline: none;}
+    .line{ margin-left:-40px; height:150px; }
+    .image{ width:20%; overflow:hidden; float:left;; }
+    .information{ margin:10px auto auto 230px; }
+    .title{ margin-left:10px;}
+    .introduction{ margin:10px auto auto 10px; color:hsl(0, 0%, 53.3%); font-size:1.3rem; }
+    .content{ margin:10px auto auto 10px; color:hsl(0, 0%, 53.3%); font-size:1.3rem; margin-left:10px; }
+    .time{ clear:both; position:relative; top:-20px; background:rgba(10,10,10,0.2); }
+    .time p{ color:white; }
+</style>
+
+<div class="body">
+<div class="page-header" id="pageh">
+    <a href={{ url_for('index')}}><img src="/static/logo.png" width="12%"></img></a>
+<form method="post"> 
+    {{ rand.submit( class="btn btn-defalut") }}
+</form>
+</div>
+<div class="page-content" id="mainbody">
+        <ul>
+            {% for post in posts %}
+            <div class="line">
+                <div class="image">
+                    <a href={{post[1]}} target=_blank>
+                        <img src='/static/pic/index/{{post[2]}}.jpg' width:"200px" height="150px"></img>
+                    </a>
+                <div class="time" id="time{{ post[12] }}"><p>{{ post[11] }}</p></div>
+                </div> 
+                <div class="information">
+                    <h4 class="title"><a href={{post[1]}} target=_blank id="1{{post[12]}}">{{post[0]}}</a></h4>
+                    <p class="introduction">
+                    作者：<span id="2{{post[12]}}">{{post[3]}}</span> &nbsp;
+                    {% if post[10] %}
+                    类型：{% endif %}<span id="3{{post[12]}}">{{post[10]}}</span>&nbsp;
+                    {% if post[7] %}
+                    评分：{% endif %}<span id="4{{post[12]}}">{{post[7]}}</span>&nbsp;
+                    时间：<span id="5{{post[12]}}">{{post[4]}}</span>&nbsp;
+                    {% if post[6] %}
+                    播放数：{% endif %}<span id="6{{post[12]}}">{{post[6]}}</span>&nbsp;
+                    喜欢数：<span id="7{{post[12]}}">{{post[8]}}</span>&nbsp;
+                    评论数：<span id="8{{post[12]}}">{{post[9]}}</span>&nbsp;
+                    </p>
+                    <p class="content" id="9{{post[12]}}">{{post[5]}}</p>
+                    <script style="text/javascript">
+                        var i=1; 
+                        var str;
+                            for( i=1; i<10; i++){
+                                str = document.getElementById(i+'{{post[12]}}').innerHTML;
+                                str = str.replace(/None/g, '');
+                                document.getElementById(i+'{{post[12]}}').innerHTML = str;
+                            }   
+                        var st = "{{ post[11] }}"; 
+                        var len = st.length;         
+                        var obj = document.getElementById("time"+'{{post[12]}}');
+                        if (len < 6 )                
+                            obj.style.cssText = "left:190px";
+                        else if (len < 8 )           
+                            obj.style.cssText = "left:180px";
+                        else if (len < 9)            
+                            obj.style.cssText = "left:170px";
+                        else                         
+                            obj.style.cssText = "left:160px";
+ 
+                    </script>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </ul>
+</div>
+</div>
+{% endblock %} 

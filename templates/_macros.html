@@ -1,0 +1,33 @@
+{% macro render_pagination(pagination) %}
+<style type="text/css">
+.pagination{
+    margin-left:200px;
+    margin-top:-15px;
+}
+.pagination span{
+    margin-left:10px;
+    font-size:18px;
+}
+</style>
+  <div class=pagination>
+  {% if pagination.has_prev %}                          
+     <a href="{{ url_for_other_page(pagination.page - 1, pagination.rank, pagination.channel, pagination.year, pagination.duration) 
+     }}"><span>&laquo; Prev </span></a>                               
+  {% endif %} 
+  {%- for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+      <a href="{{ url_for_other_page(page, pagination.rank, pagination.channel, pagination.year, pagination.duration) }}"> <span>{{ page }}</span></a>
+      {% else %}
+      <strong><span>{{ page }}</span></strong>
+      {% endif %}
+    {% else %}
+      <span class=ellipsis>…</span>
+    {% endif %}
+  {%- endfor %}
+  {% if pagination.has_next %}
+    <a href="{{ url_for_other_page(pagination.page + 1, pagination.rank, pagination.channel, pagination.year, pagination.duration)
+    }}"><span>Next &raquo;</span></a>
+  {% endif %}
+  </div>
+{% endmacro %}

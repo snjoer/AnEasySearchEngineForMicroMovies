@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js\"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='stylesheets/style.css') }}" />
+{% block title %}ViKino{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    .body{ width:1125px; overflow-x:auto; margin:0 atuo; }
+    #pageh{ margin-top:-15px; }
+    #mainbody{ margin-top:1%; clear:both; overflow:hidden;}
+    .form-control{ width:600px; height:40px; }
+    .btn{ margin: -60px 0 0 610px; width:100px; height:40px; background-color:#ECECEC;color:#7C7C7C;}
+    .btn:hover{ border-color:#8A8A8A; color:#000000;}
+    .btn:focus{outline: none; border-color: #3B94D3;}
+    .search-input{margin-top: 60px; width: 600px; height: 40px; border-color: #C6C6C6; border-width: 1px;
+	    border-style: solid; border-radius: 4px; font-size: 16px; padding-left: 0px; box-shadow: 0px 1px #C6C6C6;}
+    .search-input:hover {border-color: #969696; box-shadow: -1px 1px #969696;}
+    input:focus {border-color: #969696; box-shadow: -1px 1px #969696; outline: none;}
+    .line{ margin-left:-40px; height:150px; width:100%; }
+    .image{ width:20%; overflow:hidden; float:left; }
+    .time{ clear:both; position:relative; top:-20px; background:rgba(10,10,10,0.2); }
+    .time p{ color:white; }
+    .information{ margin:10px auto auto 230px; }
+    .title{ margin-left:10px;}
+    .introduction{ margin:10px auto auto 10px; color:hsl(0, 0%, 53.3%); font-size:1.3rem; }
+    .content{ margin:10px auto auto 1%; color:hsl(0, 0%, 53.3%); font-size:1.3rem; margin-left:1%; height:90px; overflow:hidden; }
+    .logo{ float:left; }
+    h5{ clear:both; }
+    ul{ list-style:none; }
+    .nav-pills li a{ height:30px; padding:5px 15px; }
+    .nav-pills li{ padding-top:5px; }
+    .selection{ border-bottom:1px solid #eee; padding-bottom:25px; }
+</style>
+
+<div class="body">
+<div class="page-header" id="pageh">
+    <a href={{ url_for('index') }}><img src="/static/logo.png" class="logo" width="12%"></img></a>
+<form method="post"> 
+    {{ form.hidden_tag() }}
+    {{ form.query.lable }} 
+    {{ form.query( class="search-input", value= query ) }} 
+    {{ form.submit( class="btn btn-defalut") }}
+</form>
+</div>
+<div class="selection">
+    <ul class="nav nav-pills" id="rank">        
+        <li id="rank-1"><a href="{{ url_for_other_page(pagination.page, 1, pagination.channel, pagination.year, pagination.duration) }}">综合排序</a></li>
+        <li id="rank-2"><a href="{{ url_for_other_page(pagination.page, 2, pagination.channel, pagination.year, pagination.duration) }}">播放数排序</a></li>
+        <li id="rank-3"><a href="{{ url_for_other_page(pagination.page, 3, pagination.channel, pagination.year, pagination.duration) }}">评价排序</a></li> 
+        <li id="rank-4"><a  href="{{ url_for_other_page(pagination.page, 4, pagination.channel, pagination.year, pagination.duration) }}">喜欢数排序</a></li> 
+    </ul>
+    <script type="text/javascript">
+        var div=document.getElementById("rank-{{ pagination.rank }}");
+        div.setAttribute("class","active");
+    </script> 
+    
+    <ul class="nav nav-pills" id="channel">
+        <li id="channel-1"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 1, pagination.year, pagination.duration) }}">全部类型</a></li>
+        <li id="channel-2"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 2, pagination.year, pagination.duration) }}">动画</a></li> 
+        <li id="channel-3"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 3, pagination.year, pagination.duration) }}">励志</a></li> 
+        <li id="channel-4"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 4, pagination.year, pagination.duration) }}">剧情</a></li>
+        <li id="channel-5"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 5, pagination.year, pagination.duration) }}">生活</a></li>
+        <li id="channel-6"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 6, pagination.year, pagination.duration) }}">旅行</a></li>
+        <li id="channel-7"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 7, pagination.year, pagination.duration) }}">音乐</a></li>
+        <li id="channel-8"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 8, pagination.year, pagination.duration) }}">搞笑</a></li>
+        <li id="channel-9"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 9, pagination.year, pagination.duration) }}">运动</a></li>
+        <li id="channel-10"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 10, pagination.year, pagination.duration) }}">科幻</a></li>
+        <li id="channel-11"><a href="{{ url_for_other_page(pagination.page, pagination.rank, 11, pagination.year, pagination.duration) }}">爱情</a></li> 
+    </ul>
+    <script type="text/javascript">
+        var div=document.getElementById("channel-{{ pagination.channel }}");
+        div.setAttribute("class","active");
+    </script>
+
+    <ul class="nav nav-pills" id="year">
+        <li id="year-0"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 0, pagination.duration) }}">全部年份</a></li>
+        <li id="year-2017"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2017, pagination.duration) }}">2017</a></li>
+        <li id="year-2016"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2016, pagination.duration) }}">2016</a></li> 
+        <li id="year-2015"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2015, pagination.duration) }}">2015</a></li> 
+        <li id="year-2014"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2014, pagination.duration) }}">2014</a></li>
+        <li id="year-2013"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2013, pagination.duration) }}">2013</a></li>
+        <li id="year-2012"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2012, pagination.duration) }}">2012</a></li>
+        <li id="year-2011"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, 2011, pagination.duration) }}">2011</a></li>
+    </ul>
+    <script type="text/javascript">
+        var div=document.getElementById("year-{{ pagination.year }}");
+        div.setAttribute("class","active");
+    </script>
+
+    <ul class="nav nav-pills" id="duration">        
+        <li id="duration-1"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, pagination.year, 1) }}">全部时长</a></li>
+        <li id="duration-2"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, pagination.year, 2) }}">小于5min</a></li>
+        <li id="duration-3"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, pagination.year, 3) }}">5-10min</a></li> 
+        <li id="duration-4"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, pagination.year, 4) }}">10-30min</a></li> 
+        <li id="duration-5"><a href="{{ url_for_other_page(pagination.page, pagination.rank, pagination.channel, pagination.year, 5) }}">大于30min</a></li>
+    </ul>
+    <script type="text/javascript">
+        var div=document.getElementById("duration-{{ pagination.duration }}");
+        div.setAttribute("class","active");
+    </script> 
+</div>
+    <h5> about {{ count }} results for {{ query }} (about {{ delta_time }} seconds): </h5> 
+    {%if isLong %}
+        <h5>Some text were ignored because we limit queries to 50 words. </h5>
+    {% endif %}
+<div class="page-content" id="mainbody">
+    {% if found %}
+        <ul>
+            {% for post in posts %}
+            <div class="line">
+                <div class="image">
+                    <a href={{post[1]}} target=_blank>
+                        <img src='/static/pic/index/{{post[2]}}.jpg' width:"200px" height="150px"></img>
+                    </a>
+                    <div class="time" id="time{{post[12]}}"><p>{{ post[11] }}</p></div>
+                </div> 
+                <div class="information">
+                    <h4 class="title"><a href={{post[1]}} target=_blank id="1{{post[12]}}">{{post[0]}}</a></h4>
+                    <p class="introduction">
+                    作者：<span id="2{{post[12]}}">{{post[3]}}</span> &nbsp;
+                    {% if post[10] %}
+                    类型：{% endif %} <span id="3{{post[12]}}">{{post[10]}}</span>&nbsp; 
+                    {% if post[7] %}
+                    评分：{% endif %} <span id="4{{post[12]}}">{{post[7]}}</span>&nbsp; 
+                    时间：<span id="5{{post[12]}}">{{post[4]}}</span>&nbsp;
+                    {% if post[6] %}
+                    播放数：{% endif %} <span id="6{{post[12]}}">{{post[6]}}</span>&nbsp;
+                    喜欢数：<span id="7{{post[12]}}">{{post[8]}}</span>&nbsp;
+                    评论数：<span id="8{{post[12]}}">{{post[9]}}</span>&nbsp;
+                    </p>
+                    <p class="content" id="9{{post[12]}}">{{post[5]}}</p>
+                    <script style="text/javascript">
+						var i=1;
+						var str;
+                        {% for ls in _list %}
+							for( i=1; i<10; i++){
+                            	str = document.getElementById(i+'{{post[12]}}').innerHTML;
+								str = str.replace(/{{ls}}/g,'<font color="red">{{ls}}</font>');
+                                str = str.replace(/None/g, '');
+                                document.getElementById(i+'{{post[12]}}').innerHTML = str;
+							}
+                        {% endfor %}
+                        var st = "{{ post[11] }}";
+                        var len = st.length;
+                        var obj = document.getElementById("time"+'{{post[12]}}');
+                        if (len < 6 )
+                            obj.style.cssText = "left:180px";
+                        else if (len < 8 )
+                            obj.style.cssText = "left:170px";
+                        else if (len < 9)
+                            obj.style.cssText = "left:160px";
+                        else
+                            obj.style.cssText = "left:150px";
+                    </script>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>No results for {{ query }}</h2>
+    {% endif %}
+</div>
+<div class=pagination>
+    {% if found %}
+        {{macros.render_pagination(pagination)}}
+    {% endif %}
+</div>
+</div>
+{% endblock %} 
