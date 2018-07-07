@@ -38,5 +38,8 @@ Button Data aims to help users have access to features of data used. e.g. movies
 1. This repository contains only the core codes, you may need to write some more codes before it can work properly.
 2. Database is not included as well.
 
+## LICENSE
+
+AGPL License
 
 
