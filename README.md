@@ -31,7 +31,7 @@ Button Data aims to help users have access to features of data used. e.g. movies
 * python
 * scrapy
 * flask
-* ​
+* jieba
 
 ## NB
 
